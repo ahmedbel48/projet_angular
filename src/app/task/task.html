@@ -1,0 +1,13 @@
+<h2>Mes tâches</h2>
+<button (click)="addTask()">Ajouter</button>
+<button (click)="clearTasks()">Vider</button>
+
+<ul>
+  @for (task of tasks; track task.id) {
+    <li>
+      {{ task.title | uppercase }} : créée le {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+    </li>
+  } @empty {
+    <li>Aucune tâche</li>
+  }
+</ul>
