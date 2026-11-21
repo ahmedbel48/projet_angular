@@ -1,27 +1,40 @@
-import { Component } from '@angular/core';
-import { DatePipe, UpperCasePipe } from '@angular/common';
+import { Component, signal, computed } from '@angular/core';
 import type { TaskItem } from './task.model';
 
 @Component({
   selector: 'app-task',
-  imports: [DatePipe, UpperCasePipe],
+  imports: [],
   templateUrl: './task.html',
   styleUrl: './task.css',
 })
 export class Task {
-  tasks: TaskItem[] = [];
+  tasks = signal<TaskItem[]>([]);
+  newTitle = signal('');
+  count = computed(() => this.tasks().length);
 
-  addTask() {
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.newTitle.set(input.value);
+  }
+
+  add() {
+    const title = this.newTitle().trim();
+    if (title === '') {
+      return;
+    }
+
     const newTask: TaskItem = {
-      id: this.tasks.length + 1,
-      title: 'Tâche ' + (this.tasks.length + 1),
+      id: Date.now(),
+      title: title,
       done: false,
       createdAt: new Date(),
     };
-    this.tasks = [...this.tasks, newTask];
+
+    this.tasks.update(items => [...items, newTask]);
+    this.newTitle.set('');
   }
 
-  clearTasks() {
-    this.tasks = [];
+  clear() {
+    this.tasks.set([]);
   }
 }

@@ -1,12 +1,18 @@
 <h2>Mes tâches</h2>
-<button (click)="addTask()">Ajouter</button>
-<button (click)="clearTasks()">Vider</button>
+<p>{{ count() }} tâche(s)</p>
+
+<input
+  type="text"
+  placeholder="Nouvelle tâche"
+  [value]="newTitle()"
+  (input)="onInput($event)"
+/>
+<button (click)="add()">Ajouter</button>
+<button (click)="clear()">Vider</button>
 
 <ul>
-  @for (task of tasks; track task.id) {
-    <li>
-      {{ task.title | uppercase }} : créée le {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}
-    </li>
+  @for (task of tasks(); track task.id) {
+    <li>{{ task.title }}</li>
   } @empty {
     <li>Aucune tâche</li>
   }

@@ -1,0 +1,8 @@
+<h2>Compteur : {{ count() }}</h2>
+<p>Double : {{ double() }}</p>
+<p>{{ isEven() ? 'Pair' : 'Impair' }}</p>
+
+<button (click)="increment()">+1</button>
+<button (click)="decrement()">-1</button>
+<button (click)="setToTen()">Mettre à 10</button>
+<button (click)="reset()">Réinitialiser</button>
